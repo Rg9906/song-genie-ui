@@ -73,9 +73,7 @@ export function AnswerButtons({ onAnswer, disabled }: AnswerButtonsProps) {
             aria-label={btn.label}
             className="group relative flex flex-col items-center gap-2 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-2xl"
             style={{
-              ["--btn-glow" as string]: btn.glowColor,
               outline: "none",
-              focusRingColor: btn.color,
             }}
           >
             {/* Button circle */}
@@ -93,8 +91,19 @@ export function AnswerButtons({ onAnswer, disabled }: AnswerButtonsProps) {
                   ? `0 0 40px 12px ${btn.hoverGlow}, inset 0 0 20px rgba(255,255,255,0.2)`
                   : `0 0 20px 4px ${btn.glowColor}, inset 0 0 10px rgba(255,255,255,0.1)`,
                 border: `2px solid ${btn.color}`,
-                animation: !disabled && !isFlashing ? "button-pulse 2.5s ease-in-out infinite" : "none",
-                animationDelay: btn.key === "no" ? "0.8s" : btn.key === "unsure" ? "1.6s" : "0s",
+
+                /* ✅ FIXED ANIMATION (no shorthand anymore) */
+                animationName: !disabled && !isFlashing ? "button-pulse" : "none",
+                animationDuration: "2.5s",
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
+                animationDelay:
+                  btn.key === "no"
+                    ? "0.8s"
+                    : btn.key === "unsure"
+                    ? "1.6s"
+                    : "0s",
+
                 transition: "all 0.3s ease, transform 0.2s ease",
               }}
             >
